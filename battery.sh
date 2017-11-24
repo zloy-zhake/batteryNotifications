@@ -15,7 +15,8 @@
 battery=$(acpi)
 
 # The audio files location
-DIR="/path/to/audio/files/"
+# DIR="/path/to/audio/files/"
+DIR="./audio/"
 BATTERYFULLYCHARGED="charged"
 BATTERYDISCHARGED="discharged"
 LANG=""
@@ -32,8 +33,18 @@ elif [[ "$battery" =~ "Discharging" ]]; then
   percentage=${battery:24:2}
   percentage=${percentage//%}
 
-  if [ "$percentage" -lt 20 ]; then
+  if [ "$percentage" -lt 51 ]; then
     aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
+    notify-send "$battery"
+  fi
+
+elif [[ "$battery" =~ "Charging" ]]; then
+  percentage=${battery:21:2}
+  percentage=${percentage//%}
+
+  if [ "$percentage" -gt 79 ]; then
+    aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
+    notify-send "$battery"
   fi
 
 else
