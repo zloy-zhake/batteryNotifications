@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # First of all, make this script executable
 # chmod +x battery.sh
