@@ -30,7 +30,7 @@ battery=$(acpi)
 #  aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
 
 if [[ "$battery" =~ "Discharging" ]]; then
-  percentage=${battery:24:2}
+  percentage=${battery:24:3}
   percentage=${percentage//%}
 
   if [ "$percentage" -lt 51 ]; then
@@ -39,7 +39,7 @@ if [[ "$battery" =~ "Discharging" ]]; then
   fi
 
 elif [[ "$battery" =~ "Charging" ]]; then
-  percentage=${battery:21:2}
+  percentage=${battery:21:3}
   percentage=${percentage//%}
 
   if [ "$percentage" -gt 79 ]; then
