@@ -14,6 +14,8 @@
 # Get the battery status and store it in a variable
 battery=$(acpi)
 
+echo "$battery"
+
 # The audio files location
 # DIR="/path/to/audio/files/"
 DIR="./audio/"
