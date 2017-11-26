@@ -14,29 +14,27 @@
 # Get the battery status and store it in a variable
 battery=$(acpi)
 
-echo "$battery"
-
 # The audio files location
 # DIR="/path/to/audio/files/"
-DIR="./audio/"
-BATTERYFULLYCHARGED="charged"
-BATTERYDISCHARGED="discharged"
-LANG=""
-EXT=".wav"
+# DIR="./audio/"
+# BATTERYFULLYCHARGED="charged"
+# BATTERYDISCHARGED="discharged"
+# LANG=""
+# EXT=".wav"
 
-if [[ "$battery" =~ "Full" ]]; then
-  aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
+# if [[ "$battery" =~ "Full" ]]; then
+#   aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
   
 # In my case, sometimes, the battery status never reach 100%
-elif [[ "$battery" =~ "99" ]]; then
-  aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
+#elif [[ "$battery" =~ "99" ]]; then
+#  aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
 
-elif [[ "$battery" =~ "Discharging" ]]; then
+if [[ "$battery" =~ "Discharging" ]]; then
   percentage=${battery:24:2}
   percentage=${percentage//%}
 
   if [ "$percentage" -lt 51 ]; then
-    aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
+    # aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
     notify-send "$battery"
   fi
 
@@ -45,7 +43,7 @@ elif [[ "$battery" =~ "Charging" ]]; then
   percentage=${percentage//%}
 
   if [ "$percentage" -gt 79 ]; then
-    aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
+    # aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
     notify-send "$battery"
   fi
 
