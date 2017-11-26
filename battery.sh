@@ -29,7 +29,7 @@ battery=$(acpi)
 #elif [[ "$battery" =~ "99" ]]; then
 #  aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
 
-if [[ "$battery" =~ "Discharging" ]]; then
+if [[ "$battery" =~ Discharging ]]; then
   percentage=${battery:24:3}
   percentage=${percentage//%}
 
@@ -38,7 +38,7 @@ if [[ "$battery" =~ "Discharging" ]]; then
     notify-send "$battery"
   fi
 
-elif [[ "$battery" =~ "Charging" ]]; then
+elif [[ "$battery" =~ Charging ]]; then
   percentage=${battery:21:3}
   percentage=${percentage//%}
 
