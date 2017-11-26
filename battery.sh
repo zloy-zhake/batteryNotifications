@@ -46,7 +46,4 @@ elif [[ "$battery" =~ "Charging" ]]; then
     # aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
     notify-send "$battery"
   fi
-
-else
-    echo "do nothing"
 fi
