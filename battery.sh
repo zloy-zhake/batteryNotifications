@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # First of all, make this script executable
 # chmod +x battery.sh
@@ -11,39 +11,27 @@
 # crontab -e
 # */5 * * * * /path/to/script/battery.sh
 
+# for notify-send to work through cron
+export DISPLAY=:0
+
 # Get the battery status and store it in a variable
 battery=$(acpi)
 
-# The audio files location
-# DIR="/path/to/audio/files/"
-# DIR="./audio/"
-# BATTERYFULLYCHARGED="charged"
-# BATTERYDISCHARGED="discharged"
-# LANG=""
-# EXT=".wav"
+# when battery is discharging
+if acpi | grep -q "Discharging"; then
+  percentage=$(echo "$battery" | cut -c 25-26 )
 
-# if [[ "$battery" =~ "Full" ]]; then
-#   aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
-  
-# In my case, sometimes, the battery status never reach 100%
-#elif [[ "$battery" =~ "99" ]]; then
-#  aplay -q "$DIR$BATTERYFULLYCHARGED$LANG$EXT"
-
-if [[ "$battery" =~ Discharging ]]; then
-  percentage=${battery:24:3}
-  percentage=${percentage//%}
-
+  # when battery is less than 51% show notification
   if [ "$percentage" -lt 51 ]; then
-    # aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
     notify-send "$battery"
   fi
 
-elif [[ "$battery" =~ Charging ]]; then
-  percentage=${battery:21:3}
-  percentage=${percentage//%}
-
+# when battery is charging
+elif acpi | grep -q "Charging"; then
+  percentage=$(echo "$battery" | cut -c 22-23 )
+  
+  # when battery is more than 79% show notification
   if [ "$percentage" -gt 79 ]; then
-    # aplay -q "$DIR$BATTERYDISCHARGED$LANG$EXT"
     notify-send "$battery"
   fi
 fi
